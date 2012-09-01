@@ -30,20 +30,22 @@ public class VenderMachine {
 
 		switch (money) {
 		case COIN_1:
+		case COIN_5:
+		case BILL_5000:
+		case BILL_10000:
 			return money;
 		default:
-			break;
+			changeList.add(money);
+			return null;
 		}
-		changeList.add(money);
-		return null;
-
-
 
 	}
 
 
 	public List<Money> refund() {
-		return changeList ;
+		List<Money> changeList = new ArrayList<Money>(this.changeList);
+		this.changeList.clear();
+		return changeList;
 	}
 
 }

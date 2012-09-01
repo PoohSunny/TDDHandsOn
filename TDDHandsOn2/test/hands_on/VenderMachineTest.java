@@ -100,6 +100,7 @@ public class VenderMachineTest {
 	public void お金でないものだけ投入したときはつり銭は空リストで返す() throws Exception {
 		try {
 			vm.insert(null);
+			
 		} catch (IllegalArgumentException 無視する) {
 		}
 		assertEquals(Arrays.asList(), vm.refund());
@@ -127,7 +128,34 @@ public class VenderMachineTest {
 
 	}
 
-	//TODO 1円玉など扱えないお金を入れたときのテストをする
+	@Test
+	public void 十円を投入しつり銭を出したあとの合計金額がゼロ() throws Exception {
+		vm.insert(Money.COIN_10);
+		vm.refund();
+		assertEquals(0, vm.totalAmount());
+	}
+
+	@Test
+	public void 十円を投入しつり銭を出したあともう一度つり銭を出したら空のリストを返す() throws Exception {
+		vm.insert(Money.COIN_10);
+		vm.refund();
+		assertEquals(Arrays.asList(), vm.refund());
+	}
+
+	/**
+	 * refundのテストはこれで賄えるので略
+	 * @throws Exception
+	 */
+	@Test
+	public void 百円を入れてつり銭を出したあともう一度五十円を入れると合計金額は50円() throws Exception {
+		vm.insert(Money.COIN_100);
+		vm.refund();
+		vm.insert(Money.COIN_50);
+
+		assertEquals(50, vm.totalAmount());
+
+	}
+
 	//TODO 合計額が大きかった場合に、桁あふれしないこと
 
 	private void assertRefund(List<Money> list) {
@@ -135,7 +163,30 @@ public class VenderMachineTest {
 	}
 
 	@Test
-	public void 一円を入れるとつり銭として一円を返す() throws Exception {
+	public void 一円を入れるとつり銭として一円を返し合計金額はゼロ() throws Exception {
 		assertEquals(Money.COIN_1, vm.insert(Money.COIN_1));
+		assertEquals(0, vm.totalAmount());
 	}
+
+	@Test
+	public void 五円を入れるとつり銭として五円を返し合計金額はゼロ() throws Exception {
+		assertEquals(Money.COIN_5, vm.insert(Money.COIN_5));
+		assertEquals(0, vm.totalAmount());
+	}
+
+	@Test
+	public void 五千円を入れるとつり銭として五千円を返し合計金額はゼロ() throws Exception {
+		assertEquals(Money.BILL_5000, vm.insert(Money.BILL_5000));
+		assertEquals(0, vm.totalAmount());
+	}
+
+	@Test
+	public void 一万円を入れるとつり銭として一万円を返し合計金額はゼロ() throws Exception {
+		assertEquals(Money.BILL_10000, vm.insert(Money.BILL_10000));
+		assertEquals(0, vm.totalAmount());
+	}
+	//TODO メソッド名の変更
+
+
+
 }
