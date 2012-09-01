@@ -12,11 +12,15 @@ public class VenderMachine {
 		// TODO 自動生成されたメソッド・スタブ
 	}
 
-	private int totalAmount = 0;
-	private List<Money> change = new ArrayList<Money>();
+	private List<Money> changeList = new ArrayList<Money>();
 
 
 	public int totalAmount() {
+		int totalAmount = 0;
+		for (int i = 0; i < changeList.size(); i++) {
+			totalAmount += changeList.get(i).getValue();
+
+		}
 		return totalAmount;
 	}
 
@@ -24,14 +28,13 @@ public class VenderMachine {
 	public void insert(Money money) throws IllegalAccessException {
 		if (money == null) throw new IllegalArgumentException("お金を入れてください");
 
-			totalAmount += money.getValue();
-			change.add(money);
+			changeList.add(money);
 
 	}
 
 
 	public List<Money> refund() {
-		return change ;
+		return changeList ;
 	}
 
 }
