@@ -25,10 +25,18 @@ public class VenderMachine {
 	}
 
 
-	public void insert(Money money) throws IllegalAccessException {
+	public Money insert(Money money) throws IllegalAccessException {
 		if (money == null) throw new IllegalArgumentException("お金を入れてください");
 
+		if()
+		{
 			changeList.add(money);
+			return null;
+		}
+		else
+		{
+			return money;
+		}
 
 	}
 
