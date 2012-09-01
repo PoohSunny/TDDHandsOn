@@ -1,5 +1,8 @@
 package hands_on;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class VenderMachine {
 
 	/**
@@ -10,6 +13,7 @@ public class VenderMachine {
 	}
 
 	private int totalAmount = 0;
+	private List<Money> change = new ArrayList<Money>();
 
 
 	public int totalAmount() {
@@ -17,9 +21,17 @@ public class VenderMachine {
 	}
 
 
-	public void insert(Money money) {
-		totalAmount += money.getValue();
+	public void insert(Money money) throws IllegalAccessException {
+		if (money == null) throw new IllegalArgumentException("お金を入れてください");
 
+			totalAmount += money.getValue();
+			change.add(money);
+
+	}
+
+
+	public List<Money> refund() {
+		return change ;
 	}
 
 }

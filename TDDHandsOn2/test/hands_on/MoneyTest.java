@@ -27,6 +27,6 @@ public class MoneyTest {
 
 	@Test
 	public void 千円札の額は1000円() throws Exception {
-		assertEquals(1000,Money.BILL_1000.getValue());
+		assertEquals(1000,Money.BILL_1000.getValue( ));
 	}
 }

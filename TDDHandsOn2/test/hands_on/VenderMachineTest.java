@@ -3,6 +3,7 @@ package hands_on;
 import static org.junit.Assert.*;
 
 import java.awt.geom.QuadCurve2D;
+import java.util.Arrays;
 
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +22,7 @@ public class VenderMachineTest {
 	 * お金が投入できる
 	 * 総計が出せる
 	 * 投入が複数回できる
+	 * →ここまで済み
 	 * 払い戻しができる
 	 * つり銭として出てくるのは、総計と同じ
 	 *
@@ -61,8 +63,28 @@ public class VenderMachineTest {
 
 	@Test
 	public void お金でないものを入れたときは合計は0円() throws Exception {
-		vm.insert(null);
+
+		try {
+			vm.insert(null);
+		} catch (IllegalArgumentException 無視する) {
+		}
 		assertEquals(0,vm.totalAmount());
+	}
+
+	@Test(expected = IllegalArgumentException.class)
+	public void お金でないものを入れたときはエラー() throws Exception {
+		vm.insert(null);
+	}
+
+	@Test
+	public void お金を投入していないときはつり銭は空リストで返す() throws Exception {
+		assertEquals(Arrays.asList(), vm.refund());
+	}
+
+	@Test
+	public void 五百円玉を入れて払い戻ししたときはつり銭は500円() throws Exception {
+		vm.insert(Money.COIN_500);
+		assertEquals(Arrays.asList(Money.COIN_500), vm.refund());
 	}
 
 	//TODO 1円玉など扱えないお金を入れたときのテストをする
